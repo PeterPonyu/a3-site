@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A3 · Where PLM zero-shot mutation-effect scores hold and break</title>
+  <meta name="description" content="Paper companion for A3: a uniform reliability boundary atlas of ESM-2 zero-shot log-likelihood ratios across substitution consequences. The likelihood does not read the binding partner.">
+  <meta name="author" content="Zeyu Fu">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="canonical" href="https://peterponyu.github.io/a3-site/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap-wide header-inner">
+      <a class="wordmark" href="#home">
+        <span class="wordmark-mark" aria-hidden="true">A3</span>
+        <span class="wordmark-name">A3</span>
+      </a>
+      <nav class="nav-primary" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#abstract">Abstract</a>
+        <a href="#figures">Figures</a>
+        <a href="#code">Code</a>
+        <a href="#cite">Cite</a>
+      </nav>
+      <div class="header-chips">
+        <a class="chip" href="https://peterponyu.github.io/" rel="noopener noreferrer" target="_blank">Homepage</a>
+        <a class="chip" href="https://peterponyu.github.io/scportal/" rel="noopener noreferrer" target="_blank">SCPortal</a>
+      </div>
+      <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="mobile-nav">
+        <span data-label>Menu</span>
+        <span aria-hidden="true">☰</span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <nav aria-label="Mobile">
+        <a href="#home">Home</a>
+        <a href="#abstract">Abstract</a>
+        <a href="#figures">Figures</a>
+        <a href="#code">Code</a>
+        <a href="#cite">Cite</a>
+        <div class="mobile-graph">
+          <a href="https://peterponyu.github.io/" rel="noopener noreferrer" target="_blank">Homepage — ZF Lab</a>
+          <a href="https://peterponyu.github.io/scportal/" rel="noopener noreferrer" target="_blank">SCPortal — discovery hub</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="wrap">
+        <p class="kicker">ZF Lab · PLM reliability</p>
+        <h1>A3</h1>
+        <p class="lead">Zero-shot log-likelihood ratios score <strong>substitution consequences</strong> — DMS fitness, ClinVar labels, thermodynamic <span class="mono">ΔΔG</span>, antibody liabilities. The likelihood is a fold-stability proxy: <strong>it does not read the binding partner</strong>.</p>
+        <div class="pills">
+          <a class="pill pill-primary" href="#abstract">Read the abstract</a>
+          <a class="pill pill-ghost" href="#figures">Browse figures</a>
+          <a class="pill pill-amber" href="https://doi.org/10.5281/zenodo.21869995" rel="noopener noreferrer" target="_blank">Zenodo archive</a>
+        </div>
+
+        <div class="hero-split">
+          <div>
+            <div class="scope-row" aria-label="Sample-size scope">
+              <span class="scope-chip">Protein subset <span class="n">n = 69</span> · plateau 0.725</span>
+              <span class="scope-chip">Full ProteinGym <span class="n">n = 217 assays</span> · 0.702</span>
+            </div>
+            <div class="axis-grid" aria-label="Hold versus break by consequence axis">
+              <article class="axis-card">
+                <header>
+                  <h3>DMS fitness</h3>
+                  <span class="status status-hold">Hold</span>
+                </header>
+                <p>Raw-score discrimination rises 35M→650M then plateaus. AUROC is evidence of this axis, not the product.</p>
+              </article>
+              <article class="axis-card">
+                <header>
+                  <h3>ClinVar labels</h3>
+                  <span class="status status-hold">Hold</span>
+                </header>
+                <p>Per-gene transfer under an explicit UniRef leakage caveat. Benchmark only — not a clinical classifier.</p>
+              </article>
+              <article class="axis-card">
+                <header>
+                  <h3>Stability <span class="mono-id">ΔΔG</span></h3>
+                  <span class="status status-break">Break</span>
+                </header>
+                <p>Fig 5: stable across a homology hold-out, but weak everywhere. That split is not true OOD for a foundation model.</p>
+              </article>
+              <article class="axis-card">
+                <header>
+                  <h3>Binding partner</h3>
+                  <span class="status status-break">Break</span>
+                </header>
+                <p>Fig 7: overall Spearman 0.20 collapses at antibody–antigen (0.08) and non-interface (≈0). Fold proxy, not interface recognition.</p>
+              </article>
+              <article class="axis-card">
+                <header>
+                  <h3>Antibody liability</h3>
+                  <span class="status status-break">Break</span>
+                </header>
+                <p>Fig 8: no BH-significant polyreactivity (0/14) or aggregation (0/7). Binding on FLAb is a separate, germline-unconfounded positive.</p>
+              </article>
+            </div>
+          </div>
+
+          <figure class="hero-figure" id="fig-07-hero">
+            <button type="button" class="thumb" data-full="figures/F7_binding_boundary.png" aria-label="Open Fig 7 · Binding boundary">
+              <img src="figures/F7_binding_boundary.png" alt="Four-panel figure: Spearman of LLR versus minus ΔΔG by mutation class, sample sizes, bootstrap CI widths, and key contrast bars showing antibody–antigen and non-interface collapse" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig 7 · Binding boundary</strong> <span class="chip-f">Hero</span> <span class="status status-break">Break</span></div>
+              <p>ESM-2 LLR tracks binding <span class="mono">ΔΔG</span> only as a weak fold-destabilization proxy (overall 0.20), collapsing for antibody–antigen (0.08) and non-interface (≈0). Panels C and D are alternate views of the same locked SKEMPI table, not new assays.</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="stats">
+          <div class="stat-tile"><strong>Unread</strong><span>binding partner (Fig 7)</span></div>
+          <div class="stat-tile"><strong>6</strong><span>decision axes, one LLR</span></div>
+          <div class="stat-tile"><strong>n=69</strong><span>protein subset (0.725)</span></div>
+          <div class="stat-tile"><strong>n=217</strong><span>assay corroboration (0.702)</span></div>
+        </div>
+
+        <article class="paper-card">
+          <span class="disc" aria-hidden="true">1</span>
+          <div>
+            <h2>Where protein language model zero-shot mutation-effect scores hold and where they break: a uniform reliability boundary atlas</h2>
+            <p class="paper-meta"><strong>Fu, Z.</strong> · <em>Proteins: Structure, Function, and Bioinformatics</em> · 2026 · article DOI pending</p>
+            <div class="badges">
+              <a class="badge badge-doi" href="https://doi.org/10.5281/zenodo.21869995" rel="noopener noreferrer" target="_blank" title="Archive DOI (Zenodo). Article DOI pending.">DOI</a>
+              <span class="badge badge-code is-disabled" title="Public HTTPS repository is not published. Do not invent a GitHub URL.">Code</span>
+              <span class="badge badge-site is-disabled" title="Site badge enables once Pages returns HTTP 200">Site</span>
+              <a class="badge badge-zenodo" href="https://doi.org/10.5281/zenodo.21869995" rel="noopener noreferrer" target="_blank">Zenodo</a>
+            </div>
+          </div>
+        </article>
+
+        <div class="callout">
+          <h3>Physical object</h3>
+          <p>The thing that moves is <strong>which mutation consequence likelihood can read</strong> — DMS fitness, ClinVar labels, thermodynamic <span class="mono">ΔΔG</span>, antibody developability liabilities — not AUROC itself. Fig 7 is the strongest physical claim: a fold proxy cannot read the binding partner.</p>
+        </div>
+        <div class="callout exclude-note">
+          <h3>What this site is not</h3>
+          <p>Not a better ESM. Not a clinical classifier (ClinVar leakage is in the ledger). Not a 10×4 C/D collage of new measurements — extra panels are slices of the same locked CSV. Public code is an empty designed state until a human pastes a real HTTPS URL.</p>
+        </div>
+
+        <div class="routes" style="margin-top:1.5rem">
+          <a class="route-card card-hover" href="#abstract"><span class="disc disc-lg">01</span><div><h3>Abstract</h3><p>Standalone abstract. 0.725 belongs to the 69-protein subset; 0.702 is the 217-assay panel.</p></div></a>
+          <a class="route-card card-hover" href="#figures"><span class="disc disc-lg">02</span><div><h3>Figures</h3><p>Consequence gallery: Figs 5, 7, 8 lead; Fig 1 scale; Fig 11 synthesis; Fig S1 scope.</p></div></a>
+          <a class="route-card card-hover" href="#code"><span class="disc disc-lg">03</span><div><h3>Code</h3><p>Public HTTPS is not published. Zenodo archive is live. No private workbench link.</p></div></a>
+          <a class="route-card card-hover" href="#cite"><span class="disc disc-lg">04</span><div><h3>Cite</h3><p>BibTeX stub plus Zenodo. No invented Proteins article URL.</p></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="abstract">
+      <div class="wrap">
+        <p class="kicker">Abstract</p>
+        <h2 class="section-title">A map of where one LLR can be trusted</h2>
+        <p class="deck">Same claims as the Proteins manuscript. Scope chips below keep the 69-protein plateau (0.725) separate from the 217-assay corroboration (0.702). No TeX pointers.</p>
+        <div class="scope-row" aria-label="Abstract sample-size scope">
+          <span class="scope-chip">0.725 = <span class="n">69-protein</span> subset</span>
+          <span class="scope-chip">0.702 = <span class="n">217-assay</span> ProteinGym</span>
+        </div>
+        <div class="abstract-prose" style="margin-top:1.25rem">
+          <p>Zero-shot variant-effect scores from protein language models (PLMs) are widely used as drop-in predictors of mutational consequence, yet their reliability is reported task by task with inconsistent scoring conventions, making it hard to know where a single score can be trusted. We assemble a uniform, raw-score audit of one representative model family (ESM-2) across six decision axes — discrimination versus model scale, robustness across masked-language-model encoders, clinical pathogenic/benign transfer, protein-stability ΔΔG calibration, protein–protein binding ΔΔG, and antibody developability — using a single discipline: scores are read off the raw per-position log-likelihood ratio (LLR), never a clamped or per-assay-rescaled transform; every headline carries a bootstrap interval; and each de-circularization control is checked for applicability before its verdict is trusted.</p>
+          <p>The resulting boundary atlas is consistent and bounded. Discrimination of deep-mutational-scan fitness rises from 35M to 650M parameters and then plateaus, with 3B giving no further gain (raw-score protein-mean AUROC 0.725 at both 650M and 3B, <strong>n = 69</strong>; the 3B−650M difference is within the bootstrap interval), so 650M is the efficient operating point. The same plateau on the full ProteinGym benchmark (<strong>217 assays</strong> attempted; 201 scored) is protein-mean AUROC <strong>0.702</strong> — do not paste 0.725 onto the 217-assay story. The signal is robust across independently trained masked-LM encoders rather than ESM-specific: ProtBERT reaches protein-mean AUROC 0.711 and ESM-1v agrees closely.</p>
+          <p>Zero-shot LLR discriminates ClinVar pathogenic from benign variants per gene (mean AUROC 0.78 over 20 genes) under an explicit base-model-leakage caveat; the score is nonetheless calibratable on the study panel and supports selective abstention. Against ΔΔG the model is a weak fold-stability proxy, not an interface detector: binding ΔΔG correlation is carried by general fold destabilization (overall Spearman 0.20) and collapses for antibody–antigen interfaces (0.08) and for non-interface positions (≈0). For antibody developability no BH-significant associations are detected on polyreactivity (0/14 datasets) or aggregation (0/7). The uniform protocol caught and retracted three of its own earlier over-claims, which we report as evidence that the discipline, not any single ranking, is the contribution.</p>
+        </div>
+        <p class="slice-note">Plain-language significance. Protein language models can score how damaging a mutation is without being trained on the answer. We test one widely used model the same way across six jobs. The map is encouraging for ranking mutation effects and transferring to curated disease labels, and clearly bounded elsewhere: it does not understand binding interfaces and is essentially blind to the antibody-developability liabilities that matter for screening.</p>
+        <div class="keywords" aria-label="Keywords">
+          <span class="kw">protein language models</span>
+          <span class="kw">zero-shot variant effect</span>
+          <span class="kw">reliability audit</span>
+          <span class="kw">ESM-2</span>
+          <span class="kw">benchmarking</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="figures">
+      <div class="wrap-wide">
+        <p class="kicker">Figures</p>
+        <h2 class="section-title">Consequence axes, then evidence</h2>
+        <p class="deck">Figs 5, 7, and 8 are the physical split. Fig 1 is model scale. Fig 11 is a synthesis map, not new data. Fig S1 must not mix n. Panels C and D on every float are alternate views of the same locked CSV — not new assays.</p>
+        <div class="toolbar" role="group" aria-label="Filter figures">
+          <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-chip" data-filter="consequence" aria-pressed="false">Consequence · 5, 7, 8</button>
+          <button type="button" class="filter-chip" data-filter="scale" aria-pressed="false">Scale · Fig 1</button>
+          <button type="button" class="filter-chip" data-filter="synthesis" aria-pressed="false">Synthesis · Fig 11</button>
+          <button type="button" class="filter-chip" data-filter="scope" aria-pressed="false">Scope · Fig S1</button>
+        </div>
+        <div class="figure-grid">
+          <figure class="figure-card card-hover" data-findings="consequence" id="fig-07">
+            <button type="button" class="thumb" data-full="figures/F7_binding_boundary.png" aria-label="Open Fig 7 · Binding boundary">
+              <img src="figures/F7_binding_boundary.png" alt="Spearman of LLR versus minus binding ΔΔG by subset, with antibody–antigen and non-interface collapsing toward zero" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig 7 · Binding is a fold-stability proxy</strong> <span class="chip-f">Lead</span> <span class="status status-break">Break</span></div>
+              <p>Four panels from the locked SKEMPI v2 table (1,000× bootstrap CIs). (A) Spearman(LLR, −ΔΔG) by subset. (B) n mutations. (C) Bootstrap CI width. (D) Key contrast: general (non-Ab) 0.22 versus antibody–antigen 0.08 versus non-interface ≈0. C/D are slices of the same table, not new measurements.</p>
+              <div class="fig-links">
+                <a href="figures/F7_binding_boundary.png" download>PNG</a>
+                <a href="figures/F7_binding_boundary.pdf" download>PDF</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="figure-card card-hover" data-findings="consequence" id="fig-05">
+            <button type="button" class="thumb" data-full="figures/F5_stability_ddg.png" aria-label="Open Fig 5 · Stability ΔΔG">
+              <img src="figures/F5_stability_ddg.png" alt="Stability ΔΔG discrimination and calibration across train versus homology-held-out splits, showing a small gap and weak Spearman" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig 5 · Stability ΔΔG is stable yet weak</strong> <span class="chip-f">Lead</span> <span class="status status-break">Break</span></div>
+              <p>Controlled negative on MegaScale single-mutant ΔΔG. Discrimination Spearman sits well below a supervised ThermoMPNN literature line; homology-held-out RMSE inflation is ≤+0.04. Honest reading: the hold-out is not truly out-of-distribution for a foundation model pretrained on natural sequences. C/D are split-size and inflation views of the same lock, not new assays.</p>
+              <div class="fig-links">
+                <a href="figures/F5_stability_ddg.png" download>PNG</a>
+                <a href="figures/F5_stability_ddg.pdf" download>PDF</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="figure-card card-hover" data-findings="consequence" id="fig-08">
+            <button type="button" class="thumb" data-full="figures/F8_developability_map.png" aria-label="Open Fig 8 · Developability map">
+              <img src="figures/F8_developability_map.png" alt="Antibody developability map: polyreactivity and aggregation show zero BH-significant datasets; binding is a separate positive" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig 8 · Liabilities show no BH-significant signal</strong> <span class="chip-f">Lead</span> <span class="status status-break">Break</span></div>
+              <p>FLAb properties with BH q&lt;0.05 across the panel. Polyreactivity 0/14 and aggregation 0/7 (underpowered to exclude small |ρ|). Binding 16/30 overall and 14/27 on single-parent DMS where germline identity is constant — a real positive, not a restored “germline-confounded” claim. C/D pool and applicability counts from the same table.</p>
+              <div class="fig-links">
+                <a href="figures/F8_developability_map.png" download>PNG</a>
+                <a href="figures/F8_developability_map.pdf" download>PDF</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="figure-card card-hover" data-findings="scale" id="fig-01">
+            <button type="button" class="thumb" data-full="figures/F1_scale_plateau.png" aria-label="Open Fig 1 · Scale plateau">
+              <img src="figures/F1_scale_plateau.png" alt="ESM-2 protein-mean AUROC versus model size on the 69-protein subset, plateauing at 650M" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig 1 · Discrimination plateaus at 650M</strong> <span class="chip-f">Scale</span></div>
+              <p>Raw-score protein-mean AUROC on the <strong>69-protein</strong> de-pseudo-replicated subset: 0.667 (35M) → 0.710 (150M) → <strong>0.725</strong> (650M) with no gain at 3B. This 0.725 is not the 217-assay number. Full ProteinGym corroboration is protein-mean AUROC <strong>0.702</strong>. Values use the raw LLR, not clamped confidence. C/D are counts and step ΔAUROC from the same scale table.</p>
+              <div class="fig-links">
+                <a href="figures/F1_scale_plateau.png" download>PNG</a>
+                <a href="figures/F1_scale_plateau.pdf" download>PDF</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="figure-card card-hover" data-findings="synthesis" id="fig-11">
+            <button type="button" class="thumb" data-full="figures/F11_boundary_atlas.png" aria-label="Open Fig 11 · Boundary atlas">
+              <img src="figures/F11_boundary_atlas.png" alt="Synthesis atlas of AUROC and Spearman tasks showing hold on naturalness and pathogenicity and collapse on physical binding" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig 11 · Reliability boundary atlas</strong> <span class="chip-f">Synthesis</span></div>
+              <p>One-glance map re-plotted from committed summary tables — <strong>not a new assay</strong>. Moderate naturalness/pathogenicity ranking; the likelihood does not read physical binding, thermodynamic stability, or antibody liability. Thesis of Figs 5, 7, and 8 at a glance.</p>
+              <div class="fig-links">
+                <a href="figures/F11_boundary_atlas.png" download>PNG</a>
+                <a href="figures/F11_boundary_atlas.pdf" download>PDF</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="figure-card card-hover" data-findings="scope" id="fig-s1">
+            <button type="button" class="thumb" data-full="figures/FS1_proteingym_atlas.png" aria-label="Open Fig S1 · ProteinGym calibration sub-study">
+              <img src="figures/FS1_proteingym_atlas.png" alt="Nineteen-assay position-held-out ProteinGym calibration forest and histogram, distinct from the 69-protein and 217-assay scopes" width="1600" height="1000">
+            </button>
+            <figcaption>
+              <div class="fig-kicker"><strong>Fig S1 · Position-held-out ProteinGym slice</strong> <span class="chip-f">Scope</span></div>
+              <p>19-assay position-held-out calibration sub-study (pooled AUROC 0.781; 13/19 discriminating). This slice is distinct from the <strong>69-protein</strong> subset plateau (protein-mean AUROC <strong>0.725</strong>) and from the full ProteinGym panel (<strong>217 assays</strong> attempted, 201 scored; protein-mean AUROC <strong>0.702</strong>). Do not paste 0.725 onto the 217-assay story.</p>
+              <div class="fig-links">
+                <a href="figures/FS1_proteingym_atlas.png" download>PNG</a>
+                <a href="figures/FS1_proteingym_atlas.pdf" download>PDF</a>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="code">
+      <div class="wrap">
+        <p class="kicker">Code</p>
+        <h2 class="section-title">Public HTTPS is not published</h2>
+        <p class="deck">Missing code is a designed state. A private experimental remote is not a public repository URL.</p>
+        <div class="code-empty" role="status">
+          <p class="empty-kicker">Empty on purpose</p>
+          <h3>No public code badge until a human URL exists</h3>
+          <p>A public HTTPS repository for this atlas has not been published. This page will not invent a GitHub slug, will not link a private workbench, and will not treat the Zenodo archive as a substitute repo URL.</p>
+          <p>Author-generated figure scripts and committed result artifacts are archived at the permanent DOI <a href="https://doi.org/10.5281/zenodo.21869995" rel="noopener noreferrer" target="_blank">10.5281/zenodo.21869995</a>. Input assays are third-party public data (ProteinGym, ClinVar, gnomAD, MegaScale, SKEMPI v2, FLAb). Model inference was run upstream; figures regenerate from frozen tables with no GPU.</p>
+          <p>Mode A (Proteins data-and-code statement) waits on an operator-supplied public HTTPS URL.</p>
+        </div>
+        <div class="stack" style="margin-top:1rem">
+          <article class="zenodo-card">
+            <h3>Archive DOI</h3>
+            <p class="mono" style="margin:0.45rem 0 0"><a href="https://doi.org/10.5281/zenodo.21869995" rel="noopener noreferrer" target="_blank">https://doi.org/10.5281/zenodo.21869995</a></p>
+            <p class="slice-note">Live. Use this until a public git remote exists. Article DOI pending journal assignment.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cite">
+      <div class="wrap">
+        <p class="kicker">Cite</p>
+        <h2 class="section-title">Archive now, article DOI later</h2>
+        <p class="deck">No invented Proteins URL. Copy the stub; swap the journal DOI on acceptance.</p>
+        <div class="cite-block">
+          <div class="cite-toolbar">
+            <h3>BibTeX</h3>
+            <button type="button" class="copy-btn" id="copy-bibtex">Copy BibTeX</button>
+          </div>
+          <pre class="bibtex" id="bibtex">@unpublished{Fu2026PLMBoundaryAtlas,
+  author = {Fu, Zeyu},
+  title  = {Where protein language model zero-shot mutation-effect scores hold and where they break: a uniform reliability boundary atlas},
+  year   = {2026},
+  note   = {Archive DOI: https://doi.org/10.5281/zenodo.21869995. Public code URL and journal article DOI pending.}
+}</pre>
+          <p class="visually-hidden" id="copy-status" aria-live="polite"></p>
+          <p class="peerj-line">Intended venue: <em>Proteins: Structure, Function, and Bioinformatics</em>. Article URL omitted until the journal assigns one.</p>
+        </div>
+        <div class="stack" style="margin-top:1rem">
+          <article class="author-card">
+            <h3>Author</h3>
+            <p style="margin:0.45rem 0 0"><strong>Zeyu Fu</strong></p>
+            <p class="affil">State Key Laboratory of Trauma and Chemical Poisoning, Institute of Combined Injury, Chongqing Engineering Research Center for Nanomedicine, College of Preventive Medicine, Army Medical University, Chongqing, China</p>
+            <div class="links">
+              <a href="https://orcid.org/0009-0001-8329-0108" rel="noopener noreferrer" target="_blank">ORCID 0009-0001-8329-0108</a>
+              <a href="mailto:fuzeyu99@126.com">fuzeyu99@126.com</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap-wide footer-grid">
+      <div>
+        <h2>A3</h2>
+        <p>PLM reliability boundary atlas. Substitution consequences, not a better ESM. Preview leaf — <span class="mono">noindex</span> until a public Pages host returns HTTP 200.</p>
+      </div>
+      <div>
+        <h3>Browse</h3>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#figures">Figures</a></li>
+          <li><a href="#code">Code</a></li>
+          <li><a href="#cite">Cite</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Series</h3>
+        <ul>
+          <li><a href="https://peterponyu.github.io/" rel="noopener noreferrer" target="_blank">Homepage</a></li>
+          <li><a href="https://peterponyu.github.io/scportal/" rel="noopener noreferrer" target="_blank">SCPortal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Archive</h3>
+        <ul>
+          <li><a href="https://doi.org/10.5281/zenodo.21869995" rel="noopener noreferrer" target="_blank">Zenodo 10.5281/zenodo.21869995</a></li>
+          <li>Code withheld until public HTTPS</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-title">
+    <div class="lightbox-bar">
+      <strong id="lightbox-title">Figure</strong>
+      <button type="button" class="lightbox-close" id="lightbox-close">Close</button>
+    </div>
+    <img id="lightbox-img" alt="">
+    <figcaption id="lightbox-caption"></figcaption>
+  </dialog>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
