@@ -2,3 +2,25 @@ node_modules/
 .next/
 out/
 .env*.local
+
+# AI / process artifacts
+.cursor/
+.cursor.cloud
+.cursor.cloud/
+.cursorignore
+.omc/
+.omx/
+.claude/
+.codex/
+agent-transcripts/
+*.canvas.tsx
+
+# Env / credentials
+.env
+.env.*
+
+# Editor / AI caches
+.vscode/
+.idea/
+*.swp
+.DS_Store
