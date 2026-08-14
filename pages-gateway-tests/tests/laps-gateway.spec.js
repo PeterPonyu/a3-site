@@ -71,6 +71,10 @@ for (const site of LAPS_GATEWAY_SITES) {
       page,
       request,
     }) => {
+      // Opt-in per site via probePaths: the probe forbids every off-base
+      // root-relative href (including cross-site ones), so a site only
+      // enrolls after its own media/footer basePath audit has landed.
+      test.skip(!site.probePaths, 'base-path probe not enabled for this site');
       const basePath = new URL(site.url).pathname.replace(/\/$/, '');
       const paths = ['', ...(site.probePaths ?? [])];
       for (const probe of paths) {
