@@ -7,6 +7,7 @@
  *   label: string,
  *   url: string,
  *   kind: SiteKind,
+ *   probePaths?: string[],
  *   publishedArticleDoi?: string,
  *   allowBibTeXKit?: boolean,
  *   privateGithubRepos?: string[],
@@ -49,6 +50,7 @@ export const LAPS_GATEWAY_SITES = [
     label: 'A3 PLM boundary',
     url: 'https://peterponyu.github.io/a3-site/',
     kind: 'paper-leaf',
+    probePaths: ['results/', 'methods/', 'evidence/', 'claims/'],
   },
   {
     id: 'b28',

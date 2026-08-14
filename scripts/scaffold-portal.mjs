@@ -252,6 +252,8 @@ writeFileSync(
   join(targetDir, 'src/components/FigurePanel.tsx'),
   `import Image from 'next/image';
 
+import { withBasePath } from '@/lib/base-path';
+
 export default function FigurePanel({
   src,
   alt,
@@ -263,7 +265,7 @@ export default function FigurePanel({
 }) {
   return (
     <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white/80">
-      <Image src={src} alt={alt} width={1600} height={900} className="h-auto w-full" unoptimized />
+      <Image src={withBasePath(src)} alt={alt} width={1600} height={900} className="h-auto w-full" unoptimized />
       <figcaption className="border-t border-slate-100 px-5 py-4 text-sm text-slate-600">
         {caption}
       </figcaption>
@@ -314,7 +316,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: actions/setup-node@49933ea5288caeca8642d29e6ab316508ebc106b
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm

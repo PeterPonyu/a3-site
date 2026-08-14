@@ -67,6 +67,36 @@ for (const site of LAPS_GATEWAY_SITES) {
       expect(response?.status(), `${site.url} should return 200`).toBe(200);
     });
 
+    test('Media resolve and root-relative links stay under the site base path', async ({
+      page,
+      request,
+    }) => {
+      const basePath = new URL(site.url).pathname.replace(/\/$/, '');
+      const paths = ['', ...(site.probePaths ?? [])];
+      for (const probe of paths) {
+        const label = probe || 'home';
+        await page.goto(`${site.url}${probe}`, { waitUntil: 'domcontentloaded' });
+
+        const badHrefs = await page.evaluate((base) =>
+          [...document.querySelectorAll('a[href^="/"]')]
+            .map((a) => a.getAttribute('href') ?? '')
+            .filter((href) => base && href !== base && !href.startsWith(`${base}/`)),
+        basePath);
+        expect(badHrefs, `root-relative links missing base path on ${label}`).toEqual([]);
+
+        const imgSrcs = await page.evaluate(() =>
+          [...document.querySelectorAll('img')]
+            .map((img) => img.currentSrc || img.src)
+            .filter((src) => /^https?:\/\//.test(new URL(src, location.href).href)),
+        );
+        for (const src of imgSrcs) {
+          const absolute = new URL(src, site.url).href;
+          const response = await request.get(absolute);
+          expect(response.status(), `image ${absolute} should return 200 (${label})`).toBe(200);
+        }
+      }
+    });
+
     test('Sticky Homepage + SCPortal chrome', async ({ page }) => {
       await page.goto(site.url, { waitUntil: 'networkidle' });
       const homepageLink = page.locator(`a[href="${HOMEPAGE_URL}"], a[href="/"], a[href="https://peterponyu.github.io"]`).first();
