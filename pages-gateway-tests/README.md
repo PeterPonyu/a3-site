@@ -1,6 +1,6 @@
 # LAPS Pages gateway tests (Playwright)
 
-Browser policy gate for the ten LAPS GitHub Pages science gateways. Fails CI on submission packaging, marketing splash H1, missing series chrome, horizontal overflow, private GitHub hrefs, and invented article DOIs.
+Browser policy gate for the GitHub Pages science gateways. Fails CI on submission packaging, marketing splash H1, missing series chrome, horizontal overflow, private GitHub hrefs, and invented article DOIs.
 
 ## Policy (fail-closed)
 

@@ -1,16 +1,17 @@
 /**
- * a3-site — science gateway config (generated; edit in site-configs.mjs + re-scaffold).
+ * a3-site — public Pages leaf. No figures or result numbers on the site.
  */
 export const SITE = {
   slug: 'a3-site',
-  shortName: "PLM boundary",
-  title: "Where protein language model zero-shot mutation-effect scores hold and where they break",
-  kicker: "ZF Lab · PLM reliability",
-  lead: "Zero-shot log-likelihood ratios score substitution consequences — DMS fitness, ClinVar labels, thermodynamic ΔΔG, antibody liabilities. The likelihood is a fold-stability proxy: it does not read the binding partner.",
-  physicalObject: "Single-residue substitutions and their biological consequences across six decision axes.",
-  primaryClaim: "ESM-2 LLR tracks binding ΔΔG only as a weak fold-destabilization proxy — correlation collapses for antibody–antigen interfaces and non-interface positions.",
+  shortName: 'a3-site',
+  title: 'Protein language-model substitution-score study',
+  kicker: 'ZF Lab',
+  lead: 'Public site leaf for this GitHub repository. Not a published article. This page does not include figures or result numbers.',
+  physicalObject: '',
+  primaryClaim: '',
   homepage: 'https://peterponyu.github.io/',
   scportal: 'https://peterponyu.github.io/scportal/',
+  github: 'https://github.com/PeterPonyu/a3-site',
 } as const;
 
 export type BadgeConfig = {
@@ -23,12 +24,12 @@ export type BadgeConfig = {
 export const BADGES = {
   code: {
     label: 'Code',
-    enabled: false,
-    disabledReason: 'No anonymous public HTTPS 200 yet',
+    href: SITE.github,
+    enabled: true,
   } satisfies BadgeConfig,
   site: {
     label: 'Site',
-    href: "https://peterponyu.github.io/a3-site/",
+    href: 'https://peterponyu.github.io/a3-site/',
     enabled: true,
   } satisfies BadgeConfig,
   archive: {
@@ -50,70 +51,60 @@ export const ROUTES = [
   { href: '/claims', label: 'Claims', number: '04' },
 ] as const;
 
-export const STATS = [
-  {
-    "value": "0.725",
-    "label": "protein-mean AUROC · n=69 plateau"
-  },
-  {
-    "value": "0.702",
-    "label": "full ProteinGym · 217 assays"
-  },
-  {
-    "value": "0.20",
-    "label": "binding ΔΔG Spearman overall"
-  }
-] as const;
+/** Unique infra binding per route. Shared chrome is chrome.page-shell only. */
+export type PageBinding = {
+  pageId: string;
+  runnerId: string;
+  dataId: string;
+  lawId: string;
+  sharedRunner: 'chrome.page-shell';
+};
 
-export const RESULTS_FIGURES = [
-  {
-    "src": "/media/F7_binding_boundary.png",
-    "alt": "Binding boundary figure showing interface collapse",
-    "caption": "Fig 7 — binding partner is the strongest physical break (hero)."
+export const PAGE_BINDINGS = {
+  home: {
+    pageId: 'a3.page.home',
+    runnerId: 'a3.runner.home-llr-kicker',
+    dataId: 'a3.data.stats-plateau',
+    lawId: 'a3.law.llr-fold-proxy-not-partner',
+    sharedRunner: 'chrome.page-shell',
   },
-  {
-    "src": "/media/F5_stability_ddg.png",
-    "alt": "Stability ΔΔG calibration",
-    "caption": "Fig 5 — weak fold-stability proxy across homology hold-out."
+  results: {
+    pageId: 'a3.page.results',
+    runnerId: 'a3.runner.results-fig7-binding',
+    dataId: 'a3.data.figures-f7-f5-f8-f11',
+    lawId: 'a3.law.binding-partner-break',
+    sharedRunner: 'chrome.page-shell',
   },
-  {
-    "src": "/media/F8_developability_map.png",
-    "alt": "Antibody developability liabilities",
-    "caption": "Fig 8 — no BH-significant polyreactivity or aggregation hits."
+  methods: {
+    pageId: 'a3.page.methods',
+    runnerId: 'a3.runner.methods-raw-llr-audit',
+    dataId: 'a3.data.six-axis-protocol',
+    lawId: 'a3.law.unclamped-raw-score',
+    sharedRunner: 'chrome.page-shell',
   },
-  {
-    "src": "/media/F11_boundary_atlas.png",
-    "alt": "Synthesis boundary atlas",
-    "caption": "Fig 11 — synthesis map, not new measurements."
-  }
-] as const;
+  evidence: {
+    pageId: 'a3.page.evidence',
+    runnerId: 'a3.runner.evidence-interface-collapse',
+    dataId: 'a3.data.skempi-abag-spearman',
+    lawId: 'a3.law.interface-correlation-collapse',
+    sharedRunner: 'chrome.page-shell',
+  },
+  claims: {
+    pageId: 'a3.page.claims',
+    runnerId: 'a3.runner.claims-plateau-and-proxy',
+    dataId: 'a3.data.claims-650m-skempi',
+    lawId: 'a3.law.falsifiable-plm-boundary',
+    sharedRunner: 'chrome.page-shell',
+  },
+} as const satisfies Record<string, PageBinding>;
 
-export const EVIDENCE_TILES = [
-  {
-    "value": "0.08",
-    "label": "antibody–antigen binding Spearman"
-  },
-  {
-    "value": "≈0",
-    "label": "non-interface binding positions"
-  },
-  {
-    "value": "0/14",
-    "label": "BH-significant polyreactivity sets"
-  }
-] as const;
+export const STATS = [] as const;
 
-export const METHODS_SUMMARY = "Uniform raw-score audit of ESM-2 LLR across six axes with bootstrap intervals. Scores never clamped or per-assay rescaled. 69-protein plateau reported separately from 217-assay ProteinGym corroboration." as const;
+export const RESULTS_FIGURES = [] as const;
 
-export const CLAIMS = [
-  {
-    "claim": "650M parameters plateau for DMS discrimination; 3B adds no gain.",
-    "scope": "69-protein subset; 0.725 at 650M and 3B within bootstrap CI.",
-    "refutation": "Show significant AUROC gain at 3B on the same panel with the same protocol."
-  },
-  {
-    "claim": "LLR does not read the binding partner — fold proxy only.",
-    "scope": "SKEMPI binding ΔΔG; Fig 7 locked table.",
-    "refutation": "Demonstrate interface-aware correlation without fold confound on the same table."
-  }
-] as const;
+export const EVIDENCE_TILES = [] as const;
+
+export const METHODS_SUMMARY =
+  'See the GitHub repository. This site does not publish figures or result numbers.' as const;
+
+export const CLAIMS = [] as const;

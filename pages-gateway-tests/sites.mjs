@@ -1,7 +1,7 @@
 /** @typedef {'paper-leaf' | 'scCCVGBen-atlas' | 'scCCVGBen-companion'} SiteKind */
 
 /**
- * Live LAPS paper-gateway surfaces (2026-08-13 deploy table).
+ * Live science-gateway surfaces (2026-08-13 deploy table).
  * @type {Array<{
  *   id: string,
  *   label: string,
@@ -98,7 +98,7 @@ export const ALLOWED_PUBLISHED_ARTICLE_DOIS = new Set(['10.3389/fgene.2026.18221
 /** Zenodo archive prefix — always allowed when real. */
 export const ZENODO_DOI_PREFIX = '10.5281/';
 
-/** bioRxiv preprint cited as submission packaging — forbidden on all LAPS gateways. */
+/** bioRxiv preprint cited as submission packaging — forbidden on all science gateways. */
 export const FORBIDDEN_BIORXIV_DOI = '10.1101/2025.02.01.636000';
 
 export const VIEWPORTS = {

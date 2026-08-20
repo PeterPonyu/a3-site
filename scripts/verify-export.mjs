@@ -47,6 +47,33 @@ function walk(dir) {
     } else if (denylist.some((d) => entry.name.includes(d))) {
       console.error(`FAIL G9: denylist file ${p}`);
       failed += 1;
+    } else if (/\.(png|jpe?g|webp|gif|svg)$/i.test(entry.name)) {
+      console.error(`FAIL leak: unpublished figure file ${p}`);
+      failed += 1;
+    } else if (entry.name.endsWith('.html')) {
+      scanHtmlLeaks(p.replace(`${out}/`, 'out/'), readFileSync(p, 'utf8'));
+    }
+  }
+}
+
+const leakPatterns = [
+  [/unpublished results/i, 'unpublished-results framing'],
+  [/未发表/, 'unpublished-zh'],
+  [/\bSOTA\b/, 'SOTA'],
+  [/protein-mean AUROC/i, 'unpublished AUROC'],
+  [/\b0\.725\b/, 'unpublished numeral 0.725'],
+  [/\b0\.702\b/, 'unpublished numeral 0.702'],
+];
+
+function scanHtmlLeaks(filePath, html) {
+  if (/github\.com\/PeterPonyu\/HetCLOP/i.test(html)) {
+    console.error(`FAIL G6: private HetCLOP Code href in ${filePath}`);
+    failed += 1;
+  }
+  for (const [pattern, label] of leakPatterns) {
+    if (pattern.test(html)) {
+      console.error(`FAIL leak: ${label} in ${filePath}`);
+      failed += 1;
     }
   }
 }
@@ -54,10 +81,6 @@ function walk(dir) {
 if (existsSync(out)) {
   walk(out);
   const html = readFileSync(join(out, 'index.html'), 'utf8');
-  if (/github\.com\/PeterPonyu\/HetCLOP/i.test(html)) {
-    console.error('FAIL G6: private HetCLOP Code href in index.html');
-    failed += 1;
-  }
   for (const label of ['Abstract', 'Cite', 'Team']) {
     if (new RegExp(`>${label}<`, 'i').test(html)) {
       console.error(`FAIL G3: journal nav label "${label}" in index.html`);

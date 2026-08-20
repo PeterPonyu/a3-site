@@ -1,13 +1,7 @@
-import PageShell from '@/components/PageShell';
-import { METHODS_SUMMARY } from '@/lib/site';
+import RepoLanding from '@/components/RepoLanding';
+import { PAGE_BINDINGS } from '@/lib/site';
 
-export default function MethodsPage() {
-  return (
-    <PageShell title="Methods" kicker="Protocol and scope">
-      <p>{METHODS_SUMMARY}</p>
-      <p className="text-sm text-slate-500">
-        Reproducibility: public code is not published yet. Archive DOI in the header when enabled.
-      </p>
-    </PageShell>
-  );
+/** Unique page module for a3-site Methods. shared chrome.page-shell */
+export default function A3MethodsPage() {
+  return <RepoLanding pageId={PAGE_BINDINGS.methods.pageId} />;
 }

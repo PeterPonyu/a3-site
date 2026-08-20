@@ -16,7 +16,7 @@ export default function RouteCards() {
           <div>
             <h3 className="text-lg font-semibold text-slate-900">{route.label}</h3>
             <p className="mt-1 text-sm text-slate-600">
-              Browse {route.label.toLowerCase()} for this direction.
+              {route.label} for this work.
             </p>
           </div>
         </Link>
