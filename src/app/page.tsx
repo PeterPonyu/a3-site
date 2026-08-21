@@ -1,7 +1,7 @@
 import RepoLanding from '@/components/RepoLanding';
 import { PAGE_BINDINGS } from '@/lib/site';
 
-/** Unique page module for a3-site Home. shared chrome.page-shell */
+/** Unique page module for a3-site Home. chrome.llr-strip */
 export default function A3HomePage() {
-  return <RepoLanding pageId={PAGE_BINDINGS.home.pageId} />;
+  return <RepoLanding pageId={PAGE_BINDINGS.home.pageId} showExplore />;
 }

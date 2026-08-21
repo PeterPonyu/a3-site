@@ -5,7 +5,7 @@ import { SITE } from '@/lib/site';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: SITE.title,
+  title: `${SITE.title} — LLR strip`,
   description: SITE.lead,
 };
 
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex min-h-screen flex-col">
+      <body className="llr-strip flex min-h-screen flex-col">
         <SiteHeader />
         <main className="w-full flex-1">{children}</main>
         <FooterSitemap />
